@@ -16,7 +16,7 @@ router.get('/', pageController.getIndexPage)  //渲染主页
  .get('/admin/post-add',pageController.getAdminPostAddPage)
  .get('/admin/posts',pageController.getAdminPostsPage)
  .get('/admin/profile',pageController.getAdminProfilePage)
- .get('/admin/setting',pageController.getAdminSettingPage)
+ .get('/admin/settings',pageController.getAdminSettingPage)
  .get('/admin/slides',pageController.getAdminSlidesPage)
  .get('/admin/users',pageController.getAdminUsersPage)
 
