@@ -1,12 +1,14 @@
 const express = require('express')
 const router = express.Router()
 const pageController = require('./controllers/pageController.js')
+const userController = require('./controllers/userController.js')
 
-
-router.get('/', pageController.getIndexPage)  //渲染主页
-.get('/list', pageController.getListPage)  //渲染列表页
-.get('/detail', pageController.getDetailPage)  //渲染详细页
- // 渲染后台主页
+// 页面渲染部分
+// 渲染前台用户页面
+router.get('/', pageController.getIndexPage)  
+.get('/list', pageController.getListPage)  
+.get('/detail', pageController.getDetailPage)  
+ // 渲染后台管理页面
  .get('/admin',pageController.getAdminIndexPage)
  .get('/admin/login',pageController.getLoginPage)
  .get('/admin/categories',pageController.getAdminCategoriesPage)
@@ -19,6 +21,8 @@ router.get('/', pageController.getIndexPage)  //渲染主页
  .get('/admin/settings',pageController.getAdminSettingPage)
  .get('/admin/slides',pageController.getAdminSlidesPage)
  .get('/admin/users',pageController.getAdminUsersPage)
+// 业务处理
+.post('/login',userController.login)
 
 // 暴露
 module.exports = router
