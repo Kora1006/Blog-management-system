@@ -17,18 +17,22 @@ module.exports = {
             } else {
                 if (result) {
                     if (result.password == userData.password) {
-                        res.writeHead(200, {
-                            'Set-Cookie':'isLogin=true'
-                        })
-                        // writeHead和json冲突
-                        // res.json({
-                        //     "code": 200,
-                        //     "msg": "登录成功"
-                        // })
-                        res.end(JSON.stringify({
+                        // 使用session
+                        req.session.isLogin = 'true'
+
+                        res.json({
                             "code": 200,
                             "msg": "登录成功"
-                        }))
+                        })
+                        // 使用cookie处理
+                        // res.writeHead(200, {
+                        //     'Set-Cookie': 'isLogin=true'
+                        // })
+                        // // writeHead和json冲突
+                        // res.end(JSON.stringify({
+                        //     "code": 200,
+                        //     "msg": "登录成功"
+                        // }))
                     } else {
                         res.json({
                             "code": 400,
