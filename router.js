@@ -22,7 +22,8 @@ router.get('/', pageController.getIndexPage)
  .get('/admin/slides',pageController.getAdminSlidesPage)
  .get('/admin/users',pageController.getAdminUsersPage)
 // 业务处理
-.post('/login',userController.login)
+.post('/login',userController.login)     //登录业务
+.get('/logOut',userController.logOut)
 
 // 暴露
 module.exports = router

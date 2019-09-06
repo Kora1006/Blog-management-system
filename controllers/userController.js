@@ -47,5 +47,12 @@ module.exports = {
                 }
             }
         })
+    },
+    logOut:(req,res)=>{
+        req.session.isLogin = ''
+        res.json({
+            "code":200,
+            "msg":"已成功清除session内容"
+        })
     }
 }
