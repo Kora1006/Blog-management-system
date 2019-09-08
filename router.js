@@ -2,6 +2,7 @@ const express = require('express')
 const router = express.Router()
 const pageController = require('./controllers/pageController.js')
 const userController = require('./controllers/userController.js')
+const postController = require('./controllers/postController.js')
 
 // 页面渲染部分
 // 渲染前台用户页面
@@ -23,7 +24,8 @@ router.get('/', pageController.getIndexPage)
  .get('/admin/users',pageController.getAdminUsersPage)
 // 业务处理
 .post('/login',userController.login)     //登录业务
-.get('/logOut',userController.logOut)
+.get('/logOut',userController.logOut)   //退出登录
+.get('/getAllPosts',postController.getAllPost)  //全部文章列表
 
 // 暴露
 module.exports = router

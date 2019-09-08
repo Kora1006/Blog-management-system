@@ -1,16 +1,5 @@
-//引入模块
-const mysql = require('mysql')
-
-// 创建连接对象
-let conn = mysql.createConnection({
-    host: '127.0.0.1',
-    user: 'root',
-    password: 'root',
-    database: 'baixiu'
-})
-// 连接数据库
-conn.connect()
-
+// 调用自定义连接模块
+const conn = require('../utils/conn.js')
 module.exports = {
     loginData: function (email, callback) {
         // 声明sql语句
