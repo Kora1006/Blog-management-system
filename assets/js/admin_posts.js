@@ -28,6 +28,23 @@ $(function () {
     }
     // 先调用init获取页面数据
     init()
+
+    // 当页面加载时获取分类信息并渲染至页面
+    $.ajax({
+        type: 'get',
+        url: '/getCateData',
+        dataType: 'json',
+        success: function (res) {
+            // console.log(res)
+            let htmlStr = '<option value="">所有分类</option>'
+            res.data.forEach(function (value) {
+                htmlStr +=`<option value="${value.id}">${value.name}</option>`
+            })
+            console.log(htmlStr)
+            $('#cateList').html(htmlStr)
+        }
+    })
+
     // 当用户规定当前显示的页数改变的时候
     $('#showDataSize').on('change', function () {
         pageSize = $(this).val()

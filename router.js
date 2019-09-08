@@ -26,6 +26,6 @@ router.get('/', pageController.getIndexPage)
 .post('/login',userController.login)     //登录业务
 .get('/logOut',userController.logOut)   //退出登录
 .get('/getAllPosts',postController.getAllPost)  //全部文章列表
-
-// 暴露
+.get('/getCateData',postController.getCateData)   //获取分类信息
+ // 暴露
 module.exports = router

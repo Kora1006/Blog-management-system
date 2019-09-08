@@ -16,14 +16,24 @@ module.exports = {
             } else {
                 sqlStr = 'SELECT count(*) total FROM posts'
                 conn.query(sqlStr, (err, result2) => {
-                    if(err){
+                    if (err) {
                         callback(err)
-                    }else{
-                        callback(null,{data:result1,sum:result2[0].total})
+                    } else {
+                        callback(null, { data: result1, sum: result2[0].total })
                     }
-                    
+
                 })
 
+            }
+        })
+    },
+    cateData: (callback) => {
+        let sqlStr = 'SELECT categories.* FROM categories'
+        conn.query(sqlStr,(err,result)=>{
+            if(err){
+                callback(err)
+            }else{
+                callback(null,result)
             }
         })
     }
