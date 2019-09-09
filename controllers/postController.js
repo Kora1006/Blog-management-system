@@ -21,17 +21,35 @@ module.exports = {
     getCateData: function (req, res) {
         // 调用module获取数据
         postsData.cateData((err, result) => {
-            if(err){
+            if (err) {
                 res.json({
-                    "code":400,
-                    "msg":"数据库异常"
+                    "code": 400,
+                    "msg": "数据库异常"
                 })
-            }else{
+            } else {
                 // console.log(result)
                 res.json({
+                    "code": 200,
+                    "msg": "获取分类成功",
+                    "data": result
+                })
+            }
+        })
+    },
+    getDelPostById: function (req, res) {
+        // 获取当前的请求中的id
+        let id = req.query.id
+        // 调用数据处理方法
+        postsData.delPostById(id, (err) => {
+            if(err){
+              res.json({
+                  "code":400,
+                  "msg":"删除文章失败"
+              })
+            }else{
+                res.json({
                     "code":200,
-                    "msg":"获取分类成功",
-                    "data":result
+                    "msg":"删除文章数据成功"
                 })
             }
         })

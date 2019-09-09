@@ -6,7 +6,7 @@ $(function () {
     // 获取当前页面显示条数的数据
     $('#showDataSize').val(pageSize)
 
-    // 封装调用ajax的函数
+    // 封装调用ajax获取文章数据的函数
     function init(search) {
         $.ajax({
             type: 'get',
@@ -44,6 +44,8 @@ $(function () {
             $('#cateList').html(htmlStr)
         }
     })
+
+    // 获取当前选择的状态并及时调用获取页面数据
     var search = {}
     search.cateInfo = $('#cateList').val()
     search.pulishInfo = $('#publishList').val()
@@ -82,5 +84,31 @@ $(function () {
 
         // 将选择的情况传给init
         init(search)
+    })
+
+    // 注册事件委托完成删除文章
+    $('tbody').on('click', '.delBtn', function () {
+       
+        if(window.confirm('是否删除该文章')){
+            $.ajax({
+                type:'get',
+                url:'/getDelPostById',
+                data:{
+                    id:$(this).data('id')
+                },
+                dataType:'json',
+                success:function(res){
+                    if(res.code == 400){
+                        $('#alertInfo>span').text(res.msg)
+                        $('#alertInfo').show().removeClass('alert-submit').addClass('alert-danger').fadeIn(200).delay(2000).fadeOut(200)
+                    }else{
+                        $('#alertInfo>span').text(res.msg)
+                        $('#alertInfo').show().removeClass('alert-danger').addClass('alert-submit').fadeIn(200).delay(2000).fadeOut(200)
+
+                        // 还需要完成刷新页面功能
+                    }
+                }
+            })
+        }
     })
 })

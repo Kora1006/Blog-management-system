@@ -42,5 +42,15 @@ module.exports = {
                 callback(null, result)
             }
         })
+    },
+    delPostById: (id, callback) => {
+        let sqlStr = 'DELETE FROM posts WHERE id = '+id
+        conn.query(sqlStr,(err,result)=>{
+            if(err){
+                callback(err)
+            }else{
+                callback(null)
+            }
+        })
     }
 }
