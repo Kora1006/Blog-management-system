@@ -7,8 +7,15 @@ module.exports = {
                       FROM posts
                       JOIN categories ON posts.category_id = categories.id
                       JOIN users ON posts.user_id=users.id
-                      ORDER BY posts.id DESC
-                      LIMIT ${(query.pageNum - 1) * query.pageSize},${query.pageSize}`
+                      where 1=1 `
+        if (query.cateInfo && query.cateInfo != 'all') {
+            sqlStr += ` AND posts.category_id = '${query.cateInfo}'`
+        }
+        if (query.pulishInfo && query.pulishInfo != 'all') {
+            sqlStr += ` AND posts.status='${query.pulishInfo}'`
+        }
+        sqlStr += ` ORDER BY posts.id DESC
+                  LIMIT ${(query.pageNum - 1) * query.pageSize},${query.pageSize}`
         conn.query(sqlStr, (err, result1) => {
             if (err) {
 
@@ -21,7 +28,6 @@ module.exports = {
                     } else {
                         callback(null, { data: result1, sum: result2[0].total })
                     }
-
                 })
 
             }
@@ -29,11 +35,11 @@ module.exports = {
     },
     cateData: (callback) => {
         let sqlStr = 'SELECT categories.* FROM categories'
-        conn.query(sqlStr,(err,result)=>{
-            if(err){
+        conn.query(sqlStr, (err, result) => {
+            if (err) {
                 callback(err)
-            }else{
-                callback(null,result)
+            } else {
+                callback(null, result)
             }
         })
     }

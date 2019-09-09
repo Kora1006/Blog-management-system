@@ -7,14 +7,15 @@ $(function () {
     $('#showDataSize').val(pageSize)
 
     // 封装调用ajax的函数
-    function init() {
+    function init(search) {
         $.ajax({
             type: 'get',
             url: '/getAllPosts',
             dataType: 'json',
             data: {
                 pageNum,
-                pageSize
+                pageSize,
+                ...search
             },
             success: function (res) {
                 console.log(res)
@@ -26,8 +27,7 @@ $(function () {
             }
         })
     }
-    // 先调用init获取页面数据
-    init()
+
 
     // 当页面加载时获取分类信息并渲染至页面
     $.ajax({
@@ -35,21 +35,29 @@ $(function () {
         url: '/getCateData',
         dataType: 'json',
         success: function (res) {
-            // console.log(res)
-            let htmlStr = '<option value="">所有分类</option>'
+            console.log(res)
+            let htmlStr = '<option value="all">所有分类</option>'
             res.data.forEach(function (value) {
-                htmlStr +=`<option value="${value.id}">${value.name}</option>`
+                htmlStr += `<option value="${value.id}">${value.name}</option>`
             })
-            console.log(htmlStr)
+            // console.log(htmlStr)
             $('#cateList').html(htmlStr)
         }
     })
+    var search = {}
+    search.cateInfo = $('#cateList').val()
+    search.pulishInfo = $('#publishList').val()
+    // 先调用init获取页面数据
+    init(search)
 
     // 当用户规定当前显示的页数改变的时候
     $('#showDataSize').on('change', function () {
         pageSize = $(this).val()
         pageNum = 1
-        init()
+        let search = {}
+        search.cateInfo = $('#cateList').val()
+        search.pulishInfo = $('#publishList').val()
+        init(search)
     })
 
     // 动态生成分页结构
@@ -64,4 +72,15 @@ $(function () {
             }
         })
     }
+
+    // 注册点选筛选时的事件
+    $('.btn-sm').on('click', function () {
+        //   声明一个变量存放当前选择的分类情况
+        let search = {}
+        search.cateInfo = $('#cateList').val()
+        search.pulishInfo = $('#publishList').val()
+
+        // 将选择的情况传给init
+        init(search)
+    })
 })
