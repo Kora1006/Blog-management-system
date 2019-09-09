@@ -100,10 +100,10 @@ $(function () {
                 success:function(res){
                     if(res.code == 400){
                         $('#alertInfo>span').text(res.msg)
-                        $('#alertInfo').show().removeClass('alert-submit').addClass('alert-danger').fadeIn(200).delay(2000).fadeOut(200)
+                        $('#alertInfo').show().removeClass('alert-success').addClass('alert-danger').fadeIn(200).delay(2000).fadeOut(200)
                     }else{
                         $('#alertInfo>span').text(res.msg)
-                        $('#alertInfo').show().removeClass('alert-danger').addClass('alert-submit').fadeIn(200).delay(2000).fadeOut(200)
+                        $('#alertInfo').show().removeClass('alert-danger').addClass('alert-success').fadeIn(200).delay(2000).fadeOut(200)
 
                         // 还需要完成刷新页面功能
                     }
