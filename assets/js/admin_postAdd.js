@@ -1,37 +1,38 @@
 $(function () {
     // 替换页面中原有文本框
     CKEDITOR.replace('content')
-   
+
     // 如果当前是以编辑文章的形式打开页面需要获取文章信息进行页面渲染
     let editId = utils.getData(location.search)
-    $.ajax({
-        type:'get',
-        url:'/getEditPostById',
-        data:{
-            id:editId.id
-        },
-        dataType:'json',
-        success:function(res){
-            // console.log(res)
-            if(res.code == 200){
-                console.log(res.data)
-                let data = res.data[0]
-                $('#id').val(data.id)
-                $('#title').val(data.title)
-                $('#content').val(data.content)
-                $('#slug').val(data.slug)
-                $('#category_id').val(data.category_id)
-                $('#status').val(data.status)
-                // 图片路径
-                $('#uploadFileInfo').val(data.feature)
-                $('.thumbnail').attr('src','/uploads/'+data.feature).show()
-                $('#created').val(data.created)
-
-
+    // 如果当前有id
+    if(editId.id){
+        $.ajax({
+            type: 'get',
+            url: '/getEditPostById',
+            data: {
+                id: editId.id
+            },
+            dataType: 'json',
+            success: function (res) {
+                // console.log(res)
+                if (res.code == 200) {
+                    console.log(res.data)
+                    let data = res.data[0]
+                    $('#id').val(data.id)
+                    $('#title').val(data.title)
+                    $('#content').val(data.content)
+                    $('#slug').val(data.slug)
+                    $('#category_id').val(data.category_id)
+                    $('#status').val(data.status)
+                    // 图片路径
+                    $('#uploadFileInfo').val(data.feature)
+                    $('.thumbnail').attr('src', '/uploads/' + data.feature).show()
+                    $('#created').val(data.created)
+                }
+    
             }
-
-        }
-    })
+        })
+    }
 
     // 获取当前页面的分类数据
     $.ajax({
@@ -81,29 +82,37 @@ $(function () {
         })
     })
 
+    function upLoadPost(url) {
+        $.ajax({
+            type: 'post',
+            url: url,
+            dataType: 'json',
+            data: $('form').serialize(),
+            success: function (res) {
+                // 页面提示新增成功/失败并实现跳转到总文章页面
+                $('#editInfo>span').text(res.msg).show()
+                if (res.code == 200) {
+                    $('#editInfo').show().addClass('alert-success').removeClass('alert-danger').fadeIn(200).delay(2000).fadeOut(200)
+                } else {
+                    $('#editInfo').show().addClass('alert-danger').removeClass('alert-success').fadeIn(200).delay(2000).fadeOut(200)
+                }
+                setTimeout(() => {
+                    location.href = '/admin/posts'
+                }, 2400)
+            }
+        })
+    }
     //  声明点击保存时触发Ajax新增文章
     $('.btn-primary').on('click', function (event) {
         event.preventDefault()
-         // 实现数据同步
+        // 实现数据同步
         CKEDITOR.instances.content.updateElement()
-        $.ajax({
-            type:'post',
-            url:'/postNewPost',
-            dataType:'json',
-            data:$('form').serialize(),
-            success:function (res) {
-                // 页面提示新增成功/失败并实现跳转到总文章页面
-                $('#editInfo>span').text(res.msg).show()
-               if(res.code == 200){
-                $('#editInfo').addClass('alert-success').removeClass('alert-danger').fadeIn(200).delay(2000).fadeOut(200)
-               }else{
-                $('#editInfo').addClass('alert-danger').removeClass('alert-success').fadeIn(200).delay(2000).fadeOut(200)
-               }
-               setTimeout(()=>{
-                   location.href='/admin/posts'
-               },2400)
-              }
-        })
+        // 判断当前是新增还是编辑
+        if(editId.id){
+            upLoadPost('/postUpdataPost')
+        }else{
+            upLoadPost('/postNewPost')
+        }
     })
 
 })

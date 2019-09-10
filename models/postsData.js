@@ -57,22 +57,32 @@ module.exports = {
         console.log(newPostInfo)
         let sqlStr = 'INSERT INTO posts set ?'
         conn.query(sqlStr, newPostInfo, (err, result) => {
-            if(err){
+            if (err) {
                 console.log(err)
                 callback(err)
-            }else{
+            } else {
                 callback(null)
             }
         })
     },
-    getEditPostById:(id,callback)=>{
-        let sqlStr = 'SELECT posts.* FROM posts WHERE id ='+id
-        conn.query(sqlStr,(err,result)=>{
-            if(err){
+    getEditPostById: (id, callback) => {
+        let sqlStr = 'SELECT posts.* FROM posts WHERE id =' + id
+        conn.query(sqlStr, (err, result) => {
+            if (err) {
                 console.log(err)
                 callback(err)
+            } else {
+                callback(null, result)
+            }
+        })
+    },
+    postUpdataPost: (updataPost, callback) => {
+        let sqlStr = 'UPDATE posts SET ? WHERE id=?'
+        conn.query(sqlStr, [updataPost, updataPost.id], (err, result) => {
+            if(err){
+                callback(err)
             }else{
-                callback(null,result)
+                callback(null)
             }
         })
     }
