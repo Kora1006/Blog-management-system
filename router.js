@@ -33,5 +33,7 @@ router.get('/', pageController.getIndexPage)
 .post('/postUploadFile',uploadController.postUploadFile)  //上传文件
 .post('/postNewPost',postController.postNewPost)   //新增文章
 .post('/postUpdataPost',postController.postUpdataPost)  //编辑已新增过的文章
+
+
  // 暴露
 module.exports = router
