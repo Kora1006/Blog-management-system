@@ -85,5 +85,15 @@ module.exports = {
                 callback(null)
             }
         })
+    },
+    postNewCate:(newCateInfo,callback)=>{
+        let sqlStr = 'INSERT INTO categories set ?'
+        conn.query(sqlStr,[newCateInfo],(err,result)=>{
+            if(err){
+                callback(err)
+            }else{
+                callback(null)
+            }
+        })
     }
 }

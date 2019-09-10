@@ -28,9 +28,9 @@ $(function () {
             $('.btn-sm').hide()
         }
         let checkNum = $('tbody .checkSingle:checked').length
-        if(checkNum >1){
+        if (checkNum > 1) {
             $('.btn-sm').show()
-        }else{
+        } else {
             $('.btn-sm').hide()
         }
     })
@@ -38,16 +38,36 @@ $(function () {
     // 给单个的复选框注册点击事件（事件委托）
     $('tbody').on('click', '.checkSingle', function () {
         let checkNum = $('tbody .checkSingle:checked').length
-        if(checkNum >1){
+        if (checkNum > 1) {
             $('.btn-sm').show()
-        }else{
+        } else {
             $('.btn-sm').hide()
         }
-       let checkBoxNum = $('tbody .checkSingle').length
-       if(checkBoxNum == checkNum){
-           $('#checkAll').prop('checked',true)
-       }else{
-        $('#checkAll').prop('checked',false)
-       }
+        let checkBoxNum = $('tbody .checkSingle').length
+        if (checkBoxNum == checkNum) {
+            $('#checkAll').prop('checked', true)
+        } else {
+            $('#checkAll').prop('checked', false)
+        }
     })
+
+    // 注册点击新增事件
+    $('form').on('submit', function (event) {
+        event.preventDefault()
+        $.ajax({
+            type: 'post',
+            url: '/postNewCate',
+            dataType: 'json',
+            data: $(this).serialize(),
+            success: function (res) {
+
+                utils.alertResult(res, $('#addCateInfo'))
+                $('#addCateInfo>span').text(res.msg)
+                setTimeout(() => {
+                    location.href = '/admin/categories'
+                }, 2400)
+            }
+        })
+    })
+
 })

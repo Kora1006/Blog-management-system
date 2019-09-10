@@ -91,11 +91,7 @@ $(function () {
             success: function (res) {
                 // 页面提示新增成功/失败并实现跳转到总文章页面
                 $('#editInfo>span').text(res.msg).show()
-                if (res.code == 200) {
-                    $('#editInfo').show().addClass('alert-success').removeClass('alert-danger').fadeIn(200).delay(2000).fadeOut(200)
-                } else {
-                    $('#editInfo').show().addClass('alert-danger').removeClass('alert-success').fadeIn(200).delay(2000).fadeOut(200)
-                }
+               utils.alertResult(res,$('#editInfo'))
                 setTimeout(() => {
                     location.href = '/admin/posts'
                 }, 2400)

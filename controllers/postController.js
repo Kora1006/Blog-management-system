@@ -100,15 +100,32 @@ module.exports = {
         let updataPost = req.body
         // console.log(updataPost)
         postsData.postUpdataPost(updataPost, (err, result) => {
+            if (err) {
+                res.json({
+                    "code": 400,
+                    "msg": "编辑文章数据失败"
+                })
+            } else {
+                res.json({
+                    "code": 200,
+                    "msg": "编辑文章数据成功"
+                })
+            }
+        })
+    },
+    postNewCate: function (req, res) {
+        let newCateInfo = req.body
+        newCateInfo.id = null
+        postsData.postNewCate(newCateInfo, (err, result) => {
             if(err){
                 res.json({
                     "code":400,
-                    "msg":"编辑文章数据失败"
+                    "msg":"新增分类失败"
                 })
             }else{
                 res.json({
                     "code":200,
-                    "msg":"编辑文章数据成功"
+                    "msg":"新增分类成功"
                 })
             }
         })

@@ -34,6 +34,8 @@ router.get('/', pageController.getIndexPage)
 .post('/postNewPost',postController.postNewPost)   //新增文章
 .post('/postUpdataPost',postController.postUpdataPost)  //编辑已新增过的文章
 
+.post('/postNewCate',postController.postNewCate) //新增分类
+
 
  // 暴露
 module.exports = router
