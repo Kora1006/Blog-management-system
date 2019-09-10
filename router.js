@@ -28,7 +28,8 @@ router.get('/', pageController.getIndexPage)
 .get('/logOut',userController.logOut)   //退出登录
 .get('/getAllPosts',postController.getAllPost)  //全部文章列表
 .get('/getCateData',postController.getCateData)   //获取文章的分类信息
-.get('/getDelPostById',postController.getDelPostById) //删除文章
+.get('/getDelPostById',postController.getDelPostById) //根据ID删除文章
+.get('/getEditPostById',postController.getEditPostById) //根据ID获取需要编辑的文章
 .post('/postUploadFile',uploadController.postUploadFile)  //上传文件
 .post('/postNewPost',postController.postNewPost)   //新增文章
  // 暴露

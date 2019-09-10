@@ -2,7 +2,36 @@ $(function () {
     // 替换页面中原有文本框
     CKEDITOR.replace('content')
    
- 
+    // 如果当前是以编辑文章的形式打开页面需要获取文章信息进行页面渲染
+    let editId = utils.getData(location.search)
+    $.ajax({
+        type:'get',
+        url:'/getEditPostById',
+        data:{
+            id:editId.id
+        },
+        dataType:'json',
+        success:function(res){
+            // console.log(res)
+            if(res.code == 200){
+                console.log(res.data)
+                let data = res.data[0]
+                $('#id').val(data.id)
+                $('#title').val(data.title)
+                $('#content').val(data.content)
+                $('#slug').val(data.slug)
+                $('#category_id').val(data.category_id)
+                $('#status').val(data.status)
+                // 图片路径
+                $('#uploadFileInfo').val(data.feature)
+                $('.thumbnail').attr('src','/uploads/'+data.feature).show()
+                $('#created').val(data.created)
+
+
+            }
+
+        }
+    })
 
     // 获取当前页面的分类数据
     $.ajax({

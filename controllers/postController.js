@@ -1,5 +1,5 @@
 const postsData = require('../models/postsData.js')
-const monment = require('moment')
+const moment = require('moment')
 module.exports = {
     getAllPost: function (req, res) {
         let query = req.query
@@ -27,6 +27,7 @@ module.exports = {
                     "msg": "数据库异常"
                 })
             } else {
+               
                 // console.log(result)
                 res.json({
                     "code": 200,
@@ -74,6 +75,26 @@ module.exports = {
                 })
             }
         })
+    },
+    getEditPostById:function(req,res){
+        // 获取当前请求中的id
+        let id = req.query.id
+        postsData.getEditPostById(id,(err,result)=>{
+            if(err){
+                res.json({
+                    "code":400,
+                    "msg":"数据库异常获取文章信息失败"
+                })
+            }else{
+                result[0].created = moment(result.created).format('YYYY-MM-DDTHH:mm:ss')
+                res.json({
+                    "code":200,
+                    "msg":"获取文章信息成功",
+                    "data":result
+                })
+            }
+        })
+
     }
 
 }

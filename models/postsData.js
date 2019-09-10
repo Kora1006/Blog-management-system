@@ -64,5 +64,16 @@ module.exports = {
                 callback(null)
             }
         })
+    },
+    getEditPostById:(id,callback)=>{
+        let sqlStr = 'SELECT posts.* FROM posts WHERE id ='+id
+        conn.query(sqlStr,(err,result)=>{
+            if(err){
+                console.log(err)
+                callback(err)
+            }else{
+                callback(null,result)
+            }
+        })
     }
 }
