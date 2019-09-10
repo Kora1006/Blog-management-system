@@ -19,11 +19,12 @@ module.exports = {
                     if (result.password == userData.password) {
                         // 使用session
                         req.session.isLogin = 'true'
-
-                        res.json({
-                            "code": 200,
-                            "msg": "登录成功"
-                        })
+                        req.session.loginUser =result
+                        console.log(req.session)
+                            res.json({
+                                "code": 200,
+                                "msg": "登录成功"
+                            })
                         // 使用cookie处理
                         // res.writeHead(200, {
                         //     'Set-Cookie': 'isLogin=true'
@@ -48,11 +49,11 @@ module.exports = {
             }
         })
     },
-    logOut:(req,res)=>{
+    logOut: (req, res) => {
         req.session.isLogin = ''
         res.json({
-            "code":200,
-            "msg":"已成功清除session内容"
+            "code": 200,
+            "msg": "已成功清除session内容"
         })
     }
 }

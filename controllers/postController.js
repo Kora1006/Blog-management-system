@@ -1,5 +1,5 @@
 const postsData = require('../models/postsData.js')
-
+const monment = require('moment')
 module.exports = {
     getAllPost: function (req, res) {
         let query = req.query
@@ -41,17 +41,39 @@ module.exports = {
         let id = req.query.id
         // 调用数据处理方法
         postsData.delPostById(id, (err) => {
-            if(err){
-              res.json({
-                  "code":400,
-                  "msg":"删除文章失败"
-              })
-            }else{
+            if (err) {
                 res.json({
-                    "code":200,
-                    "msg":"删除文章数据成功"
+                    "code": 400,
+                    "msg": "删除文章失败"
+                })
+            } else {
+                res.json({
+                    "code": 200,
+                    "msg": "删除文章数据成功"
+                })
+            }
+        })
+    },
+    postNewPost: function (req, res) {
+        let newPostInfo = req.body
+        newPostInfo.user_id = req.session.loginUser.id
+        newPostInfo.id = null
+        newPostInfo.views = 0
+        newPostInfo.likes = 0
+        // console.log(newPostInfo)
+        postsData.addNewPost(newPostInfo, (err) => {
+            if (err) {
+                res.json({
+                    "code": 400,
+                    "msg": "新增文章失败"
+                })
+            } else {
+                res.json({
+                    "code": 200,
+                    "msg": "新增文章成功"
                 })
             }
         })
     }
+
 }

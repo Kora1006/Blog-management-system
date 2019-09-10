@@ -44,9 +44,21 @@ module.exports = {
         })
     },
     delPostById: (id, callback) => {
-        let sqlStr = 'DELETE FROM posts WHERE id = '+id
-        conn.query(sqlStr,(err,result)=>{
+        let sqlStr = 'DELETE FROM posts WHERE id = ' + id
+        conn.query(sqlStr, (err, result) => {
+            if (err) {
+                callback(err)
+            } else {
+                callback(null)
+            }
+        })
+    },
+    addNewPost: (newPostInfo, callback) => {
+        console.log(newPostInfo)
+        let sqlStr = 'INSERT INTO posts set ?'
+        conn.query(sqlStr, newPostInfo, (err, result) => {
             if(err){
+                console.log(err)
                 callback(err)
             }else{
                 callback(null)

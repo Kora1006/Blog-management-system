@@ -19,9 +19,9 @@ module.exports = {
           "msg":"文件上传失败"
         })
       }else{
-        console.log(fields)
-        console.log('-----------------------------')
-        console.log(files)
+        // console.log(fields)
+        // console.log('-----------------------------')
+        // console.log(files)
         res.json({
           "code":200,
           "msg":"文件上传成功",

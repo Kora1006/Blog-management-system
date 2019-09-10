@@ -30,5 +30,6 @@ router.get('/', pageController.getIndexPage)
 .get('/getCateData',postController.getCateData)   //获取文章的分类信息
 .get('/getDelPostById',postController.getDelPostById) //删除文章
 .post('/postUploadFile',uploadController.postUploadFile)  //上传文件
+.post('/postNewPost',postController.postNewPost)   //新增文章
  // 暴露
 module.exports = router

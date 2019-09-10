@@ -1,8 +1,8 @@
 $(function () {
     // 替换页面中原有文本框
     CKEDITOR.replace('content')
-    // 实现数据同步
-    var data = CKEDITOR.instances.content.getData();
+   
+ 
 
     // 获取当前页面的分类数据
     $.ajax({
@@ -39,16 +39,42 @@ $(function () {
             contentType: false,
             success: function (res) {
                 // console.log(res)
-                if (res.code == 200){
+                if (res.code == 200) {
                     // 将获取的上传的图片的路径保存在隐藏域中
                     $('#uploadFileInfo').val(res.data)
                     // 将图片路径存放在图片展示区并显示
-                    $('.thumbnail').show().attr('src','/uploads/'+res.data)
+                    $('.thumbnail').show().attr('src', '/uploads/' + res.data)
 
-                }else{
+                } else {
                     $('.alert-danger>span').text(res.msg).show()
                 }
+            }
+        })
+    })
+
+    //  声明点击保存时触发Ajax新增文章
+    $('.btn-primary').on('click', function (event) {
+        event.preventDefault()
+         // 实现数据同步
+        CKEDITOR.instances.content.updateElement()
+        $.ajax({
+            type:'post',
+            url:'/postNewPost',
+            dataType:'json',
+            data:$('form').serialize(),
+            success:function (res) {
+                // 页面提示新增成功/失败并实现跳转到总文章页面
+                $('#editInfo>span').text(res.msg).show()
+               if(res.code == 200){
+                $('#editInfo').addClass('alert-success').removeClass('alert-danger').fadeIn(200).delay(2000).fadeOut(200)
+               }else{
+                $('#editInfo').addClass('alert-danger').removeClass('alert-success').fadeIn(200).delay(2000).fadeOut(200)
+               }
+               setTimeout(()=>{
+                   location.href='/admin/posts'
+               },2400)
               }
         })
     })
+
 })
