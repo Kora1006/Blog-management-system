@@ -5,7 +5,7 @@ $(function () {
     // 如果当前是以编辑文章的形式打开页面需要获取文章信息进行页面渲染
     let editId = utils.getData(location.search)
     // 如果当前有id
-    if(editId.id){
+    if (editId.id) {
         $.ajax({
             type: 'get',
             url: '/getEditPostById',
@@ -29,7 +29,7 @@ $(function () {
                     $('.thumbnail').attr('src', '/uploads/' + data.feature).show()
                     $('#created').val(data.created)
                 }
-    
+
             }
         })
     }
@@ -91,7 +91,7 @@ $(function () {
             success: function (res) {
                 // 页面提示新增成功/失败并实现跳转到总文章页面
                 $('#editInfo>span').text(res.msg).show()
-               utils.alertResult(res,$('#editInfo'))
+                utils.alertResult(res, $('#editInfo'))
                 setTimeout(() => {
                     location.href = '/admin/posts'
                 }, 2400)
@@ -104,10 +104,22 @@ $(function () {
         // 实现数据同步
         CKEDITOR.instances.content.updateElement()
         // 判断当前是新增还是编辑
-        if(editId.id){
-            upLoadPost('/postUpdataPost')
-        }else{
-            upLoadPost('/postNewPost')
+        if (editId.id) {
+            if ($('#id').val() && $('#title').val() && $('#content').val() && $('#slug').val() && $('#category_id').val()!='all' && $('#status').val() && $('#uploadFileInfo').val() && $('#created').val()) {
+                upLoadPost('/postUpdataPost')
+            } else {
+                $('#editInfo>span').text('请填写完整文章的所有信息再提交')
+                $('#editInfo').show().addClass('alert-danger').fadeIn(200).delay(2000).fadeOut(200)
+            }
+
+        } else {
+            if ($('#title').val() && $('#content').val() && $('#slug').val() && $('#category_id').val()!='all' && $('#status').val() && $('#uploadFileInfo').val() && $('#created').val()) {
+                upLoadPost('/postNewPost')
+            } else {
+                $('#editInfo>span').text('请填写完整文章的所有信息再提交')
+                $('#editInfo').show().addClass('alert-danger').fadeIn(200).delay(2000).fadeOut(200)
+            }
+
         }
     })
 

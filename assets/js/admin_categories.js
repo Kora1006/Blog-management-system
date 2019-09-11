@@ -52,13 +52,13 @@ $(function () {
     })
 
     // 注册点击新增事件
-    $('form').on('submit', function (event) {
+    $('.btnAdd').on('click', function (event) {
         event.preventDefault()
         $.ajax({
             type: 'post',
             url: '/postNewCate',
             dataType: 'json',
-            data: $(this).serialize(),
+            data: $('form').serialize(),
             success: function (res) {
 
                 utils.alertResult(res, $('#addCateInfo'))
@@ -68,6 +68,36 @@ $(function () {
                 }, 2400)
             }
         })
+    })
+
+    //注册点击单个编辑事件
+    $('tbody').on('click', '.btnEditCate', function () {
+
+        $('#name').val($(this).data('name'))
+        $('#slug').val($(this).data('slug'))
+        $('#cateID').val($(this).data('id'))
+        $('.btnEdit').show()
+        $('.btnAdd').hide()
+        $('.cateInfo').text('编辑分类信息')
+    })
+    // 注册点击编辑提交事件
+    $('.btnEdit').on('click', function (event) {
+        event.preventDefault()
+        $.ajax({
+            type: 'post',
+            url: '/postEditCateInfo',
+            dataType: 'json',
+            data: $('form').serialize(),
+            success: function (res) {
+                // console.log(res)
+                utils.alertResult(res, $('#addCateInfo'))
+                $('#addCateInfo>span').text(res.msg)
+                setTimeout(() => {
+                    location.href = '/admin/categories'
+                }, 2400)
+            }
+        })
+
     })
 
 })

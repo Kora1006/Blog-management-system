@@ -20,7 +20,7 @@ module.exports = {
                         // 使用session
                         req.session.isLogin = 'true'
                         req.session.loginUser =result
-                        console.log(req.session)
+                        // console.log(req.session)
                             res.json({
                                 "code": 200,
                                 "msg": "登录成功"

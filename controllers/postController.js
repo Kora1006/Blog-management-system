@@ -117,15 +117,33 @@ module.exports = {
         let newCateInfo = req.body
         newCateInfo.id = null
         postsData.postNewCate(newCateInfo, (err, result) => {
+            if (err) {
+                res.json({
+                    "code": 400,
+                    "msg": "新增分类失败"
+                })
+            } else {
+                res.json({
+                    "code": 200,
+                    "msg": "新增分类成功"
+                })
+            }
+        })
+    },
+    postEditCateInfo: function (req, res) {
+        let editCateInfo = req.body
+        // console.log(editCateInfo)
+        postsData.postEditCateInfo(editCateInfo, (err, result) => {
+     
             if(err){
                 res.json({
                     "code":400,
-                    "msg":"新增分类失败"
+                    "msg":"修改分类信息失败"
                 })
             }else{
                 res.json({
                     "code":200,
-                    "msg":"新增分类成功"
+                    "msg":"修改分类信息成功"
                 })
             }
         })

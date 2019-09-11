@@ -88,25 +88,23 @@ $(function () {
 
     // 注册事件委托完成删除文章
     $('tbody').on('click', '.delBtn', function () {
-       
-        if(window.confirm('是否删除该文章')){
-            $.ajax({
-                type:'get',
-                url:'/getDelPostById',
-                data:{
-                    id:$(this).data('id')
-                },
-                dataType:'json',
-                success:function(res){
-                    if(res.code == 400){
-                        $('#alertInfo>span').text(res.msg)
-                        $('#alertInfo').show().removeClass('alert-success').addClass('alert-danger').fadeIn(200).delay(2000).fadeOut(200)
-                    }else{
-                        $('#alertInfo>span').text(res.msg)
-                        $('#alertInfo').show().removeClass('alert-danger').addClass('alert-success').fadeIn(200).delay(2000).fadeOut(200)
 
-                        // 还需要完成刷新页面功能
-                    }
+        if (window.confirm('是否删除该文章')) {
+            $.ajax({
+                type: 'get',
+                url: '/getDelPostById',
+                data: {
+                    id: $(this).data('id')
+                },
+                dataType: 'json',
+                success: function (res) {
+                    utils.alertResult(res, $('#alertInfo'))
+                    $('#alertInfo>span').text(res.msg)
+                    pageNum = 1
+                    let search = {}
+                    search.cateInfo = $('#cateList').val()
+                    search.pulishInfo = $('#publishList').val()
+                    init(search)
                 }
             })
         }

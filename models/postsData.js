@@ -95,5 +95,19 @@ module.exports = {
                 callback(null)
             }
         })
+    },
+    postEditCateInfo:(editCateInfo,callback)=>{
+        
+        let sqlStr = 'UPDATE categories SET ? WHERE id= ?'
+        conn.query(sqlStr,[editCateInfo,editCateInfo.id],(err,result)=>{
+            
+            if(err){
+        
+                callback(err)
+              
+            }else{
+                callback(null)
+            }
+        })
     }
 }
