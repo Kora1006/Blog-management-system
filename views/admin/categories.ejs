@@ -46,7 +46,7 @@
         </table>
         <div class="page-action">
             <!-- show when multiple checked -->
-            <a class="btn btn-danger btn-sm" href="javascript:;" style="display: none">批量删除</a>
+            <a class="btn btn-danger btn-sm btnDel" href="javascript:;" style="display: none">批量删除</a>
           </div>
       </div>
     </div>
@@ -55,12 +55,12 @@
 <script type="text/template" id="cateList">
   {{each $data}}
   <tr>
-      <td class="text-center"><input type="checkbox" class="checkSingle"></td>
+      <td class="text-center"><input type="checkbox" class="checkSingle" data-id="{{$value.id}}"></td>
       <td>{{$value.name}}</td>
       <td>{{$value.slug}}</td>
       <td class="text-center">
         <a href="javascript:;" class="btn btn-info btn-xs btnEditCate" data-id="{{$value.id}}" data-name="{{$value.name}}" data-slug="{{$value.slug}}">编辑</a>
-        <a href="javascript:;" class="btn btn-danger btn-xs" data-id={{$value.id}}>删除</a>
+        <a href="javascript:;" class="btn btn-danger btn-xs btnDelCate" data-id={{$value.id}}>删除</a>
       </td>
     </tr>
     {{/each}}

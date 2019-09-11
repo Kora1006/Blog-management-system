@@ -4,7 +4,7 @@ const pageController = require('./controllers/pageController.js')
 const userController = require('./controllers/userController.js')
 const postController = require('./controllers/postController.js')
 const uploadController = require('./controllers/uploadController.js')
-
+const cateController = require('./controllers/cateController.js')
 // 页面渲染部分
 // 渲染前台用户页面
 router.get('/', pageController.getIndexPage)  
@@ -27,15 +27,15 @@ router.get('/', pageController.getIndexPage)
 .post('/login',userController.login)     //登录业务
 .get('/logOut',userController.logOut)   //退出登录
 .get('/getAllPosts',postController.getAllPost)  //全部文章列表
-.get('/getCateData',postController.getCateData)   //获取文章的分类信息
+.get('/getCateData',cateController.getCateData)   //获取文章的分类信息
 .get('/getDelPostById',postController.getDelPostById) //根据ID删除文章
 .get('/getEditPostById',postController.getEditPostById) //根据ID获取需要编辑的文章
 .post('/postUploadFile',uploadController.postUploadFile)  //上传文件
 .post('/postNewPost',postController.postNewPost)   //新增文章
 .post('/postUpdataPost',postController.postUpdataPost)  //编辑已新增过的文章
 
-.post('/postNewCate',postController.postNewCate) //新增分类
-.post('/postEditCateInfo',postController.postEditCateInfo) //编辑分类
-
+.post('/postNewCate',cateController.postNewCate) //新增分类
+.post('/postEditCateInfo',cateController.postEditCateInfo) //编辑分类
+.get('/getDelCateById',cateController.getDelCateById)  //删除分类
  // 暴露
 module.exports = router

@@ -1,21 +1,24 @@
 
 
 $(function () {
-    // ajax发送请求获取页面分类数据
-    $.ajax({
-        type: 'get',
-        url: '/getCateData',
-        dataType: 'json',
-        success: function (res) {
-            console.log(res)
-            if (res.code == 200) {
-                let htmlStr = template('cateList', res.data)
-                // console.log(htmlStr)
-                $('tbody').html(htmlStr)
+    // ajax发送请求获取页面分类数据(封装初始化函数))
+    function init() {
+        $.ajax({
+            type: 'get',
+            url: '/getCateData',
+            dataType: 'json',
+            success: function (res) {
+                // console.log(res)
+                if (res.code == 200) {
+                    let htmlStr = template('cateList', res.data)
+                    // console.log(htmlStr)
+                    $('tbody').html(htmlStr)
+                }
             }
-        }
-    })
-
+        })
+    }
+    //   调用初始化函数获取当前页面信息
+    init()
     // 管理复选框
     // 点击全选框时选择所有分类的复选框并显示批量删除
     $('#checkAll').on('change', function () {
@@ -64,7 +67,9 @@ $(function () {
                 utils.alertResult(res, $('#addCateInfo'))
                 $('#addCateInfo>span').text(res.msg)
                 setTimeout(() => {
-                    location.href = '/admin/categories'
+                    $('#name').val(" ")
+                    $('#slug').val(" ")
+                    init()
                 }, 2400)
             }
         })
@@ -93,11 +98,66 @@ $(function () {
                 utils.alertResult(res, $('#addCateInfo'))
                 $('#addCateInfo>span').text(res.msg)
                 setTimeout(() => {
-                    location.href = '/admin/categories'
+                    $('#name').val(" ")
+                    $('#slug').val(" ")
+                    $('.btnEdit').hide()
+                    $('.btnAdd').show()
+                    $('.cateInfo').text('添加新分类目录')
+                    init()
+
                 }, 2400)
             }
         })
 
     })
 
+    // 注册点击单个删除事件
+    $('tbody').on('click', '.btnDelCate', function () {
+        let id = $(this).data('id')
+        $.ajax({
+            type: 'get',
+            url: '/getDelCateById',
+            dataType: 'json',
+            data: {
+                id
+            },
+            success: function (res) {
+                // console.log(res)
+                utils.alertResult(res, $('#addCateInfo'))
+                $('#addCateInfo>span').text(res.msg)
+                setTimeout(() => {
+                    init()
+                }, 2400)
+            }
+        })
+    })
+
+    // 注册批量删除事件
+    $('.btnDel').on('click', function () {
+        // 获取当前已点击了复选框的元素的id
+        let checkNum = $('.checkSingle:checked')
+        let idArr = []
+        // 遍历获取到的被点击的复选框
+        for (var i = 0; i < checkNum.length; i++) {
+            idArr.push($(checkNum[i]).data('id'))
+        }
+        // console.log(idArr.join(','))
+        $.ajax({
+            type: 'get',
+            url: '/getDelCateById',
+            dataType: 'json',
+            data: {
+                id: idArr.join(',')
+            },
+            success: function (res) {
+                // console.log(res)
+                utils.alertResult(res, $('#addCateInfo'))
+                $('#addCateInfo>span').text(res.msg)
+                setTimeout(() => {
+                    $('.btnDel').hide()
+                    init()
+                }, 2400)
+            }
+        })
+    })
 })
