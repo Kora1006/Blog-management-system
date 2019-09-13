@@ -1,13 +1,13 @@
 $(function () {
     // 定义分页数据
     let pageNum = 1  //当前页码
-    let pageSize =   $('#showDataSize').val()//每页显示条数
+    let pageSize = $('#showDataSize').val()//每页显示条数
     // 页面初始化即获取评论信息
     function init() {
         $.ajax({
             type: 'get',
             url: '/getCommentData',
-            data:{
+            data: {
                 pageNum,
                 pageSize
             },
@@ -77,13 +77,13 @@ $(function () {
             $('#checkAll').prop('checked', false)
         }
     })
-       // 封装单条评论处理事件
-       function contrComment(url,id) {  
+    // 封装单条评论处理事件
+    function contrComment(url, id) {
         $.ajax({
             type: 'get',
             url: url,
             data: {
-                id:id
+                id: id
             },
             dataType: 'json',
             success: function (res) {
@@ -99,22 +99,68 @@ $(function () {
 
         if (confirm('是否删除该评论')) {
             let id = $(this).data('id')
-           contrComment('/getDelCommentById',id)
+            contrComment('/getDelCommentById', id)
         }
     })
- 
+
     // 注册事件委托完成驳回评论
     $('tbody').on('click', '.btnReject', function () {
 
         if (confirm('是否驳回该评论')) {
             let id = $(this).data('id')
-            contrComment('/getRejectCommentById',id)
+            contrComment('/getRejectCommentById', id)
         }
     })
     // 注册事件委托完成批准评论
     $('tbody').on('click', '.btnAppro', function () {
-            let id = $(this).data('id')
-            contrComment('/getApproCommentById',id)
+        let id = $(this).data('id')
+        contrComment('/getApproCommentById', id)
+    })
+
+    // 封装批量处理评论的函数
+    function contrAllComment(url) {
+        // 获取当前已点击了复选框的元素的id
+        let checkNum = $('.checkSingle:checked')
+
+        let idArr = []
+        // 遍历获取到的被点击的复选框
+        for (var i = 0; i < checkNum.length; i++) {
+            idArr.push($(checkNum[i]).data('id'))
+        }
+        // console.log(idArr.join(','))
+        $.ajax({
+            type: 'get',
+            url: url,
+            dataType: 'json',
+            data: {
+                id: idArr.join(',')
+            },
+            success: function (res) {
+                // console.log(res)
+                utils.alertResult(res, $('#commentInfo'))
+                $('#commentInfo>span').text(res.msg)
+                setTimeout(() => {
+                    $('.btn-batch').hide()
+                    init()
+                }, 2400)
+            }
+        })
+    }
+    // 注册批量删除事件
+    $('.btnDelAll').on('click', function () {
+        if (confirm('是否删除选中的评论')) {
+            contrAllComment('/getDelCommentById')
+        }
+    })
+    // 注册批量驳回事件
+    $('.btnRejectAll').on('click', function () {
+        if (confirm('是否驳回选中的评论')) {
+            contrAllComment('/getRejectCommentById')
+        }
+    })
+    // 注册批量批准事件
+    $('.btnApproAll').on('click', function () {
+        contrAllComment('/getApproCommentById')
     })
 
 })
