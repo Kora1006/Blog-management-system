@@ -25,16 +25,16 @@ $(function () {
         let checkStatus = $(this).prop('checked')  //判断当前全选框的状态
         if (checkStatus) {
             $('tbody .checkSingle').prop('checked', true)
-            $('.btn-sm').show()
+            $('.btnDel').show()
         } else {
             $('tbody .checkSingle').prop('checked', false)
-            $('.btn-sm').hide()
+            $('.btnDel').hide()
         }
         let checkNum = $('tbody .checkSingle:checked').length
         if (checkNum > 1) {
-            $('.btn-sm').show()
+            $('.btnDel').show()
         } else {
-            $('.btn-sm').hide()
+            $('.btnDel').hide()
         }
     })
 

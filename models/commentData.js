@@ -1,14 +1,14 @@
 const conn = require('../utils/conn.js')
 
 module.exports = {
-    getCommentData: (query,callback) => {
+    getCommentData: (query, callback) => {
         let sqlstr = `SELECT comments.*,posts.title
         FROM comments
         JOIN posts ON comments.post_id=posts.id
         ORDER BY comments.id DESC
         LIMIT ${(query.pageNum - 1) * query.pageSize},${query.pageSize}`
         conn.query(sqlstr, (err, result1) => {
-            if(err){
+            if (err) {
                 callback(err)
             } else {
                 sqlStr = 'SELECT count(*) total FROM posts'
@@ -20,6 +20,38 @@ module.exports = {
                     }
                 })
 
+            }
+        })
+    },
+    getDelCommentById: (id, callback) => {
+        let sqlStr = `DELETE FROM comments WHERE id in (${id})`
+        conn.query(sqlStr, (err) => {
+            if(err){
+                callback(err)
+            }else{
+                callback(null)
+            }
+        })
+    },
+    getRejectCommentById:(id,callback)=>{
+        let sqlStr =`UPDATE comments SET c_status='rejected' WHERE id in (${id})`
+        conn.query(sqlStr,(err)=>{
+            if(err){
+               
+                callback(err)
+            }else{
+                callback(null)
+            }
+        })
+    },
+    getApproCommentById:(id,callback)=>{
+        let sqlStr = `UPDATE comments SET c_status='approved' WHERE id in (${id})`
+        conn.query(sqlStr,(err)=>{
+            if(err){
+                
+                callback(err)
+            }else{
+                callback(null)
             }
         })
     }

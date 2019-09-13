@@ -42,5 +42,9 @@ router.get('/', pageController.getIndexPage)
 .get('/getDelCateById',cateController.getDelCateById)  //删除分类
 
 .get('/getCommentData',commentController.getCommentData)  //获取评论信息
- // 暴露
+.get('/getDelCommentById',commentController.getDelCommentById)  //删除评论
+.get('/getRejectCommentById',commentController.getRejectCommentById)  //驳回评论
+.get('/getApproCommentById',commentController.getApproCommentById)  //批准评论
+
+// 暴露
 module.exports = router
