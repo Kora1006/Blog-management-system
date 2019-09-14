@@ -1,0 +1,11 @@
+[  { id: 1, key: 'site_url', value: 'http://localhost' },
+   { id: 2, key: 'site_logo', value: '/static/assets/img/logo.png' },
+   { id: 3, key: 'site_name', value: '阿里百秀 - 发现生活，发现美！' },
+   {id: 4,key: 'site_description',value: '阿里百秀同阿里巴巴有咩关系，答案当然系一啲都冇' },
+  { id: 5, key: 'site_keywords', value: '生活, 旅行, 自由, 诗歌, 科技' },
+  {id: 6,key: 'site_footer', value: '<p>© 2016 XIU主题演示 本站主题由 themebetter 提供</p>' },
+   { id: 7, key: 'comment_status', value: '1' },
+   { id: 8, key: 'comment_reviewed', value: '1' },
+  {id: 9,key: 'nav_menus',value:'[{"icon":"fa fa-glass","text":"奇趣事","title":"奇趣事","link":"/category/funny"},{"icon":"fa fa-phone","text":"潮科技","title":"潮科技","link":"/category/tech"},{"icon":"fa fa-fire","text":"会生活","title":"会生活","link":"/category/living"},{"icon":"fa fa-gift","text":"美奇迹","title":"美奇迹","link":"/category/travel"}]'
+},
+  {id: 10,key: 'home_slides',value:'[{"image":"/static/uploads/slide_1.jpg","text":"轮播项一","link":"https://zce.me"},{"image":"/static/uploads/slide_2.jpg","text":"轮播项二","link":"https://zce.me"}]' } ]

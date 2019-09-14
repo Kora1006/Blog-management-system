@@ -6,7 +6,7 @@ const postController = require('./controllers/postController.js')
 const uploadController = require('./controllers/uploadController.js')
 const cateController = require('./controllers/cateController.js')
 const commentController = require('./controllers/commentController')
-
+const settingController = require('./controllers/settingController')
 
 // 页面渲染部分
 // 渲染前台用户页面
@@ -46,5 +46,9 @@ router.get('/', pageController.getIndexPage)
 .get('/getRejectCommentById',commentController.getRejectCommentById)  //驳回评论
 .get('/getApproCommentById',commentController.getApproCommentById)  //批准评论
 
+.get('/getSettingData',settingController.getSettingData) //获取网站设置信息
+
+
+.get('/getNavMenusData',settingController.getNavMenusData)  //获取导航菜单信息
 // 暴露
 module.exports = router
