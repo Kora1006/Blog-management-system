@@ -1,5 +1,8 @@
 // 连接数据库
 const conn = require('../utils/conn.js')
+const uuid = require('node-uuid');
+
+
 
 module.exports = {
     postsData: (query, callback) => {
@@ -45,7 +48,10 @@ module.exports = {
         })
     },
     addNewPost: (newPostInfo, callback) => {
-        console.log(newPostInfo)
+
+        // v1 根据时间戳和随机数生成的uuid
+        const creatuuid= uuid.v1()
+        newPostInfo.id=creatuuid
         let sqlStr = 'INSERT INTO posts set ?'
         conn.query(sqlStr, newPostInfo, (err, result) => {
             if (err) {
